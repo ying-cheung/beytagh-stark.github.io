@@ -1,0 +1,302 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.ico?v=2.0.0-rc.0" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.ico?v=2.0.0-rc.0" type="image/png" sizes="32x32"><meta name="description" content="NGINX配置文件官方示例 NGINXNGINX官方文档 NGINX                    NGINX配置文件配置信息                           详细内容       请注意：（上面内容为简化版，下面内容是详细配置信息，有些是上面没有的，如果你需要可以手动添加）"><meta property="og:type" content="article"><meta property="og:title" content="NGINX配置文件配置信息"><meta property="og:url" content="https://www.gov-cn.cn/posts/754220bd/index.html"><meta property="og:site_name" content="hihi007&#39;s Blog"><meta property="og:description" content="NGINX配置文件官方示例 NGINXNGINX官方文档 NGINX                    NGINX配置文件配置信息                           详细内容       请注意：（上面内容为简化版，下面内容是详细配置信息，有些是上面没有的，如果你需要可以手动添加）"><meta property="article:published_time" content="2017-10-19T08:50:13.000Z"><meta property="article:modified_time" content="2020-04-06T15:26:24.440Z"><meta property="article:author" content="hihi007"><meta property="article:tag" content="Nginx"><meta name="twitter:card" content="summary"><meta name="keywords" content="hihi007, hihi007's Blog"><meta name="description" content="hihi007的个人博客"><title>NGINX配置文件配置信息</title><link ref="canonical" href="https://www.gov-cn.cn/posts/754220bd/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.0.0-rc.0"><script>var Stun=window.Stun||{},CONFIG={root:"/",algolia:void 0,fontIcon:{prompt:{success:"fas fa-check-circle",info:"fas fa-arrow-circle-right",warning:"fas fa-exclamation-circle",error:"fas fa-times-circle"},copyBtn:"fas fa-copy"},sidebar:{offsetTop:"20px",tocMaxDepth:6},header:{enable:!0,showOnPost:!0,scrollDownIcon:!0},postWidget:{endText:!0},nightMode:{enable:!0},back2top:{enable:!0},codeblock:{style:"carbon",highlight:"ocean",wordWrap:!0},reward:!0,fancybox:!0,zoomImage:{gapAside:"20px"},galleryWaterfall:void 0,lazyload:!1,pjax:{avoidBanner:!1},externalLink:{icon:{enable:!0,name:"fas fa-external-link-alt"}},shortcuts:void 0,prompt:{copyButton:"Copy",copySuccess:"Copy Success",copyError:"Copy Error"},sourcePath:{js:"js",css:"css",images:"images"}};window.CONFIG=CONFIG</script><meta name="generator" content="Hexo 4.2.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">Home</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return!1"><span class="header-nav-menu-item__icon"><i class="fas fa-list"></i></span><span class="header-nav-menu-item__text">博文</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/archives/"><span class="header-nav-submenu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-submenu-item__text">Archives</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/categories/"><span class="header-nav-submenu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-submenu-item__text">Categories</span></a></div><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/tags/"><span class="header-nav-submenu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-submenu-item__text">Tags</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="javascript:;" onclick="return!1"><span class="header-nav-menu-item__icon"><i class="fas fa-flask"></i></span><span class="header-nav-menu-item__text">实验室</span></a><div class="header-nav-submenu"><div class="header-nav-submenu-item"><a class="header-nav-submenu-item__link" href="/labs/myst/"><span class="header-nav-submenu-item__icon"><i class="fas fa-user-secret"></i></span><span class="header-nav-submenu-item__text">秘境</span></a></div></div></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/about/"><span class="header-nav-menu-item__icon"><i class="fas fa-user"></i></span><span class="header-nav-menu-item__text">About</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/links/"><span class="header-nav-menu-item__icon"><i class="fas fa-link"></i></span><span class="header-nav-menu-item__text">友链</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">Search</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">hihi007's Blog</div><div class="header-banner-info__subtitle">唯一不变的就是一直在变</div></div><div class="header-banner-arrow"><div class="header-banner-arrow__icon"><i class="fas fa-angle-down"></i></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">NGINX配置文件配置信息</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">Created</span><span class="post-meta-item__value">2017-10-19</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">Updated</span><span class="post-meta-item__value">2020-04-06</span></span><span class="post-meta-item post-meta-item--wordcount"><span class="post-meta-item__icon"><i class="far fa-file-word"></i></span><span class="post-meta-item__info">Words</span><span class="post-meta-item__value">5.6k</span></span><span class="post-meta-item post-meta-item--readtime"><span class="post-meta-item__icon"><i class="far fa-clock"></i></span><span class="post-meta-item__info">Reading</span><span class="post-meta-item__value">37m</span></span><span class="post-meta-item post-meta-item--visitors"><span class="post-meta-item__icon" data-popover="Visitors" data-popover-pos="up"><i class="fas fa-eye"></i></span><span class="post-meta-item__value" id="busuanzi_value_page_pv"></span></span></div></header><div class="post-body"><p>NGINX配置文件官方示例 <span class="exturl"><a class="exturl__link" href="https://www.nginx.com/resources/wiki/start/topics/examples/full/" target="_blank" rel="noopener">NGINX</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><br>NGINX官方文档 <span class="exturl"><a class="exturl__link" href="https://www.nginx.com/en/docs/" target="_blank" rel="noopener">NGINX</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p><hr><h2 id="NGINX配置文件配置信息"><a href="#NGINX配置文件配置信息" class="heading-link"><i class="fas fa-link"></i></a>NGINX配置文件配置信息</h2><h3 id="详细内容"><a href="#详细内容" class="heading-link"><i class="fas fa-link"></i></a>详细内容</h3><p><strong>请注意：（上面内容为简化版，下面内容是详细配置信息，有些是上面没有的，如果你需要可以手动添加）</strong></p><a id="more"></a><figure class="highlight plain"><div class="table-container"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">#   * For more information on configuration, see:</span><br><span class="line">#   * Official English Documentation: http://nginx.org/en/docs/</span><br><span class="line">#   * Official Russian Documentation: http://nginx.org/ru/docs/</span><br><span class="line"></span><br><span class="line">user nginx;</span><br><span class="line">worker_processes auto;</span><br><span class="line">error_log /var/log/nginx/error.log;</span><br><span class="line">pid /var/run/nginx.pid;</span><br><span class="line"></span><br><span class="line"># Load dynamic modules. See /usr/share/nginx/README.dynamic.</span><br><span class="line">include /usr/share/nginx/modules/*.conf;</span><br><span class="line"></span><br><span class="line">worker_rlimit_nofile 65535;</span><br><span class="line"></span><br><span class="line">events {</span><br><span class="line">    use epoll;</span><br><span class="line">    multi_accept on;</span><br><span class="line">    worker_connections 65480;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">http {</span><br><span class="line">    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '</span><br><span class="line">                      '$status $body_bytes_sent "$http_referer" '</span><br><span class="line">                      '"$http_user_agent" "$http_x_forwarded_for"';</span><br><span class="line"></span><br><span class="line">    access_log  /var/log/nginx/access.log  main;</span><br><span class="line"></span><br><span class="line">    server_tokens	off;</span><br><span class="line">    sendfile            on;</span><br><span class="line">    tcp_nopush          on;</span><br><span class="line">    tcp_nodelay         on;</span><br><span class="line">    keepalive_timeout   65;</span><br><span class="line">    types_hash_max_size 2048;</span><br><span class="line"></span><br><span class="line">    limit_req_zone $binary_remote_addr zone=addr:10m rate=50r/s;</span><br><span class="line">    #limit_conn addr 100;</span><br><span class="line">    gzip  on;</span><br><span class="line">    gzip_disable “MSIE [1-6].(?!.*SV1)”;</span><br><span class="line">    gzip_http_version 1.1;</span><br><span class="line">    gzip_vary on;</span><br><span class="line">    gzip_proxied any;</span><br><span class="line">    gzip_min_length 1k;</span><br><span class="line">    gzip_buffers 4 16k;</span><br><span class="line">    gzip_comp_level 6;</span><br><span class="line">    gzip_types text/plain text/css text/xml text/javascript application/json application/x-javascript application/xml application/xml+rss application/javascript;</span><br><span class="line"></span><br><span class="line">    include             /etc/nginx/mime.types;</span><br><span class="line">    default_type        application/octet-stream;</span><br><span class="line"></span><br><span class="line">    # Load modular configuration files from the /etc/nginx/conf.d directory.</span><br><span class="line">    # See http://nginx.org/en/docs/ngx_core_module.html#include</span><br><span class="line">    # for more information.</span><br><span class="line">    include /etc/nginx/conf.d/*.conf;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></div></figure><h3 id="主配置配置文件讲解"><a href="#主配置配置文件讲解" class="heading-link"><i class="fas fa-link"></i></a>主配置配置文件讲解</h3><figure class="highlight plain"><div class="table-container"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">#   * For more information on configuration, see:</span><br><span class="line">#   * Official English Documentation: http://nginx.org/en/docs/</span><br><span class="line">#   * Official Russian Documentation: http://nginx.org/ru/docs/</span><br><span class="line"></span><br><span class="line">user nginx;  #定义NGINX运行用户</span><br><span class="line">worker_processes auto;  #启动进程，通常设置为和CPU数量相等或auto为自动</span><br><span class="line">worker_cpu_affinity 0001 0010 0100 1000; #为每个进程分配CPU，例子中将8个进程分配到8个CPU，当然可以写多个，或者将一个进程分配到多个CPU</span><br><span class="line">error_log /var/log/nginx/error.log; #全局错误日志，日志定义等级{debug|info|notice|warn|error|crit}</span><br><span class="line">pid /var/run/nginx.pid;  #PID文件</span><br><span class="line"></span><br><span class="line"># Load dynamic modules. See /usr/share/nginx/README.dynamic.</span><br><span class="line">include /usr/share/nginx/modules/*.conf;</span><br><span class="line"></span><br><span class="line">worker_rlimit_nofile 65535;  #NGINX进程打开最多文件描述符数目，理论值应该是最多打开文件数(ulimit -n)与NGINX进程数相处，但是NGINX分配请求不是那么均匀，所以最好与(ulimit -n)的值保持一致</span><br><span class="line"></span><br><span class="line">#工作模式及连接上限</span><br><span class="line">events {</span><br><span class="line">    use epoll; #异步读写模型，是多路复用I/O中的一种方式，仅用于Linux2.6以上内核，可以大大提高NGINX的性能</span><br><span class="line">    multi_accept on; #告诉NGINX尽可能的接受更多请求</span><br><span class="line">    worker_connections 65480;  #单个后台Worker process进程的最大并发连接数（最大连接数=连接数*进程数）</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">#设定HTTP服务器，利用它的反向代理功能提供负载均衡支持</span><br><span class="line">http {</span><br><span class="line">    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '</span><br><span class="line">                      '$status $body_bytes_sent "$http_referer" '</span><br><span class="line">                      '"$http_user_agent" "$http_x_forwarded_for"';</span><br><span class="line"></span><br><span class="line">    access_log  /var/log/nginx/access.log  main;  #设定日志格式</span><br><span class="line"></span><br><span class="line">    server_tokens	off;  #隐藏返回NGINX版本信息</span><br><span class="line">	autoindex          off;  #开启目录列表访问，适合下载服务器，默认关闭</span><br><span class="line">    sendfile            on;  #sendfile指令指定Nginx是否调用sendfile函数（zero copy方式）来输出文件，对于普通应用必须设定为on，如果用来进行下载等应用磁盘I/O重负载应用，可设置为off，以平衡磁盘与网络I/O处理速度，降低系统的uptime</span><br><span class="line"></span><br><span class="line">    tcp_nopush          on;  #防止网络阻塞</span><br><span class="line">    tcp_nodelay         on;  #提高数据的实时响应性</span><br><span class="line">    keepalive_timeout   65;  #keepalive超时时间，客户端到服务器端的连接持续有效时间，当出现对服务器的后继请求时，keepalive-timeout功能可以避免建立或重新建立连接</span><br><span class="line">    types_hash_max_size 2048;</span><br><span class="line"></span><br><span class="line">    #以"$binary_remote_addr"为辨识获取钥匙，定义addr为限值域，10m为钥匙桶大小（10兆），50r/s为1次每秒</span><br><span class="line">    limit_req_zone $binary_remote_addr zone=addr:10m rate=50r/s;</span><br><span class="line">    #limit_conn addr 100;</span><br><span class="line">    gzip  on;  #开启gzip压缩</span><br><span class="line">    gzip_disable “MSIE [1-6].(?!.*SV1)”;  #关闭微软IE浏览器GZIP压缩，因为IE6对GZIP不友好</span><br><span class="line">    gzip_http_version 1.1;  #压缩版本</span><br><span class="line">    gzip_vary on;  #启用答应头"Vary: Accept-Encoding"</span><br><span class="line">    gzip_proxied any;  #NGINX作为反向代理时启用，off(关闭所有代理结果的数据的压缩),expired(启用压缩,如果header头中包括"Expires"头信息),no-cache(启用压缩,header头中包含"Cache-Control:no-cache"),no-store(启用压缩,header头中包含"Cache-Control:no-store"),private(启用压缩,header头中包含"Cache-Control:private"),no_last_modefied(启用压缩,header头中不包含"Last-Modified"),no_etag(启用压缩,如果header头中不包含"Etag"头信息),auth(启用压缩,如果header头中包含"Authorization"头信息)</span><br><span class="line">    gzip_min_length 1k;  #最小压缩</span><br><span class="line">    gzip_buffers 4 16k;  #以16k为单位，按照原始数据大小以16k为单位的4倍申请内存</span><br><span class="line">    gzip_comp_level 6;  #压缩级别大小，最大为9，值越小，压缩比例越小，CPU处理更快，值越大，消耗CPU越高</span><br><span class="line">    gzip_types text/plain text/css text/xml text/javascript application/json application/x-javascript application/xml application/xml+rss application/javascript;  #匹配压缩类型</span><br><span class="line">    </span><br><span class="line">    client_max_body_size 10MB;  #允许客户请求的最大单文件字节数</span><br><span class="line">    client_body_buffer_size 128KB;  #缓冲区代理缓存用户端请求的最大字节数</span><br><span class="line">    proxy_connect_timeout 90;  #NGINX跟后端服务器连接超时时间（代理连接超时）</span><br><span class="line">    proxy_send_timeout 90;  #后端服务器数据回传时间（代理发送超时）</span><br><span class="line">    proxy_read_timeout 90;  #连接成功后，后端服务器响应时间（代理接收超时）</span><br><span class="line">    proxy_buffer_size 4KB;  #设置代理服务器（NGINX）保存用户头信息的缓冲区大小</span><br><span class="line">    proxy_buffers 4 32KB;  #proxy_buffers缓冲区，页面平均在32KB以下的话，这样设置</span><br><span class="line">    proxy_busy_buffers_size 64KB;  #高负荷下缓存大小（proxy_buffers*2）</span><br><span class="line">    large_client_header_buffers 4 4KB;  #设定请求缓存</span><br><span class="line">    client_header_buffer_size 4KB;  #客户端请求头部的缓冲区大小，这个可以根据系统分页大小来设置，一般一个请求的头部大小不会超过1KB，不过由于一般系统分页都要大于1KB，所以这里设置为分页大小，分页大小可以用命令getconf PAGESIZE取得</span><br><span class="line">    open_file_cach_max =1024 inactive=20s;  #这个将为打开文件指定缓存，默认是没有启用的，max指定缓存数量，建议和打开文件数一致，inactive是指经过多长时间文件没被请求后删除缓存</span><br><span class="line">    open_file_cache_valid 30s;  #这个是指多长时间检查一次缓存的有效信息</span><br><span class="line">    open_file_cache_min_user 1;  #open_file_cache指令中的inactive参数时间的最少使用次数，如果超过这个次数，文件描述符一直是在缓存中打开的， 如下例，如果有一个文件在inactive</span><br><span class="line">    types_hash_max_size 2048;  #types_hash_max_size 影响散列表的冲突率。types_hash_max_size越大，就会消耗更多的内存，但散列key的冲突率会降低，检索速度就更快。types_hash_max_size越小，消耗的内存就越小，但散列key的冲突率可能上升</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    include             /etc/nginx/mime.types;  #设置MIME类型，类型由mime.type文件定义</span><br><span class="line">    default_type        application/octet-stream;  #避免浏览器自动播放文件，这个类型会让浏览器认为响应是普通的文件流，并提示用户下载文件</span><br><span class="line"></span><br><span class="line">    # Load modular configuration files from the /etc/nginx/conf.d directory.</span><br><span class="line">    # See http://nginx.org/en/docs/ngx_core_module.html#include</span><br><span class="line">    # for more information.</span><br><span class="line">    include /etc/nginx/conf.d/*.conf;  #包含其他配置文件，如自定义的虚拟主机</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></div></figure><h3 id="NGINX均衡负载及虚拟主机配置文件讲解"><a href="#NGINX均衡负载及虚拟主机配置文件讲解" class="heading-link"><i class="fas fa-link"></i></a>NGINX均衡负载及虚拟主机配置文件讲解</h3><pre><code>#以下为NGINX应用分布式负载均衡群及配置，NGINX实现负载均衡需要基于ypstream模块，同时需要设置location proxy_pass转发指令实现，根据后端实际情况修改即可，beytagh_www为负载均衡模块的名称，可以任意指定，但是必须跟vhost.conf、nginx.conf虚拟主机的proxy_pass段保持一致，否则不能将请求转发至后端的服务器，weight表示配置权重，在fail_timeout内检查max_fails次数，失败则剔除均衡，配置如下：
+upstream beytagh_www {
+    server 127.0.0.1:8080 weight=1 max_fails=2 fail_timeout=30s;
+    server 127.0.0.1:8081 weight=1 max_fails=2 fail_timeout=30s;
+}
+#虚拟主机配置
+server {
+  listen       80;  #侦听端口
+  server_name  www.gov-cn.cn;  #定义使用www.gov-cn.cn访问
+  access_log logs/access.log main;  #设定本虚拟主机的访问日志
+  root /data/webapps/www;  #定义服务器的默认网站根目录位置
+  index index.php index.html index.htm;  #定义首页索引文件的名称
+
+location ~/ {
+    root /data/webapps/www;  #定义服务器的默认网站根目录位置
+    index index.php index.html index.htm;  #定义首页索引文件的名称
+    #以下是一些反向代理的配置
+    proxy_next_upstream http_502 http_504 error timeout invalid_header;  #如果后端服务器返回502、504、执行超市等错误，自动将请求转发到upstream负载均衡池中的另一台服务器，实现故障转移
+    proxy_redirect off;  #后端的web服务器可以通过X-Forwarded-For获取用户的真实IP
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_pass http:/beytagh_www;
+}
+#定义错误提示页面
+error_page 500 502 503 504 /50x.html；
+location = /50x.html {
+    root html;
+}
+#配置NGINX动静分离，定义的静态页面直接从NGINX发布目录读取
+location ~.*\.(html|htm|gif|jpg|jpeg|bmp|png|ico|txt|js|css)$ {
+    root /data/webapps/www;
+    expires 3d;  #expires定义用户浏览器缓存的时间为3天，如果静态页面不常更新，可以设置更长，这样可以节省带宽和缓解服务器的压力，在浏览器保存该类型文件的天数
+}
+#PHP脚本请求全部转发到FastCGI处理，使用FastCGI默认配置
+location ~\.php$ {
+    root /data/webapps/www;
+    FastCGI_pass 127.0.0.1:9000;
+    FastCGI_index index.php;
+    FastCGI_param SCRIPT_FILENAME /data/webapps/www$FastCGI_script_name;  #如果server段没有配置主目录则使用这行代码
+    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;  #如果server段设置了主目录则可以使用代码
+    include        fastcgi_params;
+}
+#定义查看NGINX状态的地址
+location /NginxStatus {
+    stub_status on;
+}
+}
+#注：通过expires参数设置，可以在浏览器缓存静态文件，从而减少用户与服务器之间的请求和流量，具体expires定义是给一个资源设定一个过期时间，浏览器无需去服务端下载资源，直接通过浏览器自身确认是否过期即可，所以不会产生额外的流量。
+#如果静态文件不常更新，expires可以设定为30d，表示在这30天内再次访问该静态文件，浏览器会发送一个http请求，会对比服务器该文件最后更新时间是否有变化，如果没有变化，则不会从服务器抓取，返回HTTP状态码304，如果有修改，则直接从服务器重新下载，返回状态码200</code></pre><h3 id="NGINX实用规则"><a href="#NGINX实用规则" class="heading-link"><i class="fas fa-link"></i></a>NGINX实用规则</h3><pre><code>1.概述
+大家都知道NGINX有很多功能模块，比如反向代理、缓存等，这篇总结了下我们这些年实际环境中那些有用的NGINX规则和模块，大部分适用法的概括和介绍，具体细节在实际配置时再自行Goole吧。
+
+2.内置语法
+先介绍NGINX默认已支持的内置功能，靠这些基本就能满足大部分的web服务需求。
+
+2.1 proxy代理
+proxy常用于两类应用场景，一类是中转，如异地科学的上网方式，另外一类是到后端服务的负载均衡方案。
+用反向代理时候，需要特别注意里面的域名默认是在NGINX启动时候就解析了，除非reload否则一直用的是当初解析的域名，也就是说不能动态解析，但这个问题是可以通过别的模块或者用内置字典变量方式来解决。
+resolver 114.114.114.114;
+server {
+    location / {
+        set $servers github.com;
+        proxy_pass http://$servers;
+    }
+}
+
+2.1.1 中转
+针对某个域名进行中转：
+server {
+listen 172.16.10.1:80;
+    server_name pypi.python.org;
+    location ~ /simple {
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_pass http://pypi.python.org;
+    }
+}
+注意如果是前后端域名不一样的话需要处理proxy_redirect的301跳转之类的显示，否则在跳转时候会跳转到proxy_pass的域名。
+另外可以直接代理所有80端口的http流量：
+server {
+    listen 80;
+    server_name _;
+    resolver 114.114.114.114;
+    set $URL $host;
+    location / {
+        proxy_pass http://$URL;
+    }
+}
+如果是想代理https的站点也不是不可能，只是需要自行处理CA证书导入即可，而且经过https中转的流量对nginx是透明的，也就是有证书的时候做窃听和劫持的情况。
+
+2.1.2 负载均衡
+这是代理的另外一个常见用法，通过upstream到多个后端，可以通过weight来调节权重或者backup关键词来指定备份用的后端，通常默认就可以 了，或者可以指定类似ip_hash这样的方式来均衡，配置很简单，先在http区域添加upstream定义：
+upstream backend {
+    ip_hash;
+    server backend1.example.com weight=5;
+    server backend2.example.com weight=5;;
+}
+然后在server里面添加proxy_pass：
+location / {
+    proxy_pass http://backend;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+}
+做负载均衡的时候可以智能识别后端服务器状态，虽然可以智能地proxy_next_upstream到另外的后端，但还是会定期损失一些正常的“尝试性”的连接，比如过了max_fails 次尝试之后，休息fail_timeout时间，过了这个时间之后又会去尝试，这个时候可以使用第三方的upstream_check模块来在后台定期地自动探索，类似这样：
+check interval=3000 rise=2 fall=5 timeout=2000 type=http;
+这样替代用户正常的连接来进行尝试的方式进一步保障了高可用的特性。
+还有就是在做前端代理的时候也是这样的方式，直接proxy_pass到后端即可，比如CDN的场景。
+
+2.2 防盗链
+普通的防盗链是通过referer来做，比如：
+location ~* \.(gif|jpg|png|bmp)$ {
+    valid_referers none blocked *.example.com server_names ~\.google\. ~\.baidu\.;
+    if ($invalid_referer) {
+        return 403;
+    }
+}
+再精细一点的就是URL加密，针对一些用户IP之类的变量生成一个加密URL通常是针对文件下载时候用到，可以通过openresty来写lua脚本或者是accesskey之类的模块来实现。
+
+2.3 变量
+NGINX里面支持正则匹配和变量配置，默认的变量比如remote_addr、request_filename、query_string、server_name之类的，这些组合在一起可以做很多规则，或者还有日志里面status、http_cookie等。
+还有在进行多域名配置时候可以用通配符，比如：
+server_name ~^(www\.)?(.+)$;
+root /data/web/$2;
+这样就实现了自动进行域名的目录指派。
+变量方面，比如配置变量a=1：
+set $a 1;
+下面这个案例配合if判断来做有更大的用处。
+
+2.4 if判断
+nginx里面支持一些简单的if判断，但是没有多重逻辑的语法，多个判断条件用起来需要结合变量的方式来实现，比如允许ip地址为10.10.61段和和192.168.100段的用户访问，其余的拒绝，返回405状态码：
+set $err 0;
+    if ( $remote_addr ~ 10.10.61.){
+        set $err 0;
+    }
+    if ( $remote_addr ~ 192.168.100.){
+        set $err 0;
+    }
+    if ( $err = 1){
+        return 405;
+    }
+这样通过一个err变量比较巧妙实现了需求。
+
+2.5 error_page
+有用到后端proxy的地方需要加上这句话才可以传到状态码到NGINX：
+fastcgi_intercept_errors on;
+具体配置一般是配置到具体的错误URL页面，比如：
+#返回具体状态码
+error_page 404 403 /4xx.html
+#返回200状态码
+error_page 404 403 =200  /error.html
+或者采用callback的方式统一做处理：
+error_page 404 403 = @fallback; 
+location @fallback {
+    proxy_pass http://backend;
+    access_log /data/logs/404_error.log access;
+}
+这样在重定向时不会改变URL，然后把404页面直接返回。
+
+2.6 rewrite
+rewrite做一些301、302之类的跳转，同时也可以在CDN前端做“去问号”缓存的效果。
+location /db.txt {
+    rewrite (.*) $1? break;
+    include proxy.conf;
+}
+另外最常见的跳转写法：
+rewrite ^/game/(.*) /$1;
+把/game/test跳转为/test的效果，注意这样是没有状态码的，如果访问正常就直接返回200状态码。
+可以在后面加个permanent参数，就变为了301 Moved Permanently，或者添加redirect改为302跳转。
+同理，还可以进行多个正则匹配进行URL重组，比如：
+rewrite ^/download/(.*)/lastest/(.*)$ /file/$1?ver=$2 break;
+
+2.7 日志字段
+想针对每个连接进行日志留档，可以在NGINX日志那里配置好字段，比如记录cookie之类的数据。
+在log_format字段里面加入$http_cookie变量即可。
+另外post的数据可以永久保留在文件里面，比如用来做http的日志备份，包括get和post的原始数据，把这个值开启即可：
+client_body_in_file_only  on;
+然后post的数据就会保存在nginx/client_body_temp文件夹里面。
+
+2.8 internal 关键字
+这个关键词很少见，但有时候是很有用的，比如在有很多规则时候，突然需要针对某个目录转为NGINX内部处理。
+location ^~ /upload/down/ {
+alias /data/web/dts/dtsfile/down/;
+internal;
+
+2.9 try_files
+字面意思是尝试，后面可以接多个目录或者文件，比如kohana框架：
+try_files $uri /index.php?$query_string;
+先看是否有URL这个文件，没有的话再调用index.php来处理，或者支持状态码处理：
+try_files /foo /bar/ =404;
+没有这两个文件的话返回404状态。
+
+2.10 auth 认证
+可以做简单的用户登录认证方式，其中的passwd_file得通过apache的htpasswd命令来生成。
+auth_basic "Restricted";
+auth_basic_user_file passwd_file;
+认证通过之后每次访问会在头部添加Authorization字段包含用户名密码的base64加密密文给服务端。
+
+2.11 Gzip
+普通的线上web站点gzip压缩是必须要开的，压缩一些文本类型的文件再返回给用户。
+注意必须手动指定全需要压缩的类型，比如css、js之类的，线上配置如下：
+gzip on;
+gzip_min_length  2048;
+gzip_buffers     4 16k;
+gzip_vary   on;
+gzip_http_version 1.1;
+gzip_types  text/plain  text/css text/xml application/xml application/javascript application/x-javascript ;
+
+2.12 mime 配置
+很久以前基本是忽略这个配置，但手游流行之后就发现异常了，需要让手机浏览器知道返回的apk后缀是什么类型，否则类似IE浏览器会以zip后缀返回，需要加上：
+application/vnd.android.package-archive apk;
+application/iphone pxl ipa;
+
+2.13 限速
+限速包括限制请求的并发数和请求的下载速度。
+简单的限制某个线程的下载速度就直接加上一句话就可以了：
+limit_rate 1024k;
+要限制某个IP的并发数之类的就需要用ngx_http_limit_req_module和ngx_http_limit_conn_module模块了，不过是默认就编译好的。
+比如使用一个 10M 大小的状态缓存区，针对每个IP每秒只接受20次的请求：
+limit_req_zone $binary_remote_addr zone=NAME:10m rate=20r/s;
+
+2.14 location 匹配
+location匹配有多种方式，常见的比如
+location  = / 
+location  / 
+location ^~ /test{
+是有优先级的，直接 ”=” 的优先级是最高的，一般就用”~”这个符号来匹配php就好了，不过是区分了大小写的：
+location ~ .*\.php$
+
+2.15 文件缓存
+返回给用户的文件一般都配置了过期时间，让浏览器缓存起来。
+比如缓存14天：
+expires 14d;
+针对某些特殊的文件就需要location匹配之后进行禁止缓存配置：
+add_header Cache-Control no-cache;
+add_header Cache-Control no-store;
+expires off;
+
+2.16 缓存文件
+NGINX可以作为ATS这样的缓存服务器来缓存文件，配置也比较简单，不过我们很少用，除非一些特殊的场合，参考配置：
+#先在全局下面定义好缓存存放的目录
+proxy_cache_path  /data/cache/ levels=1:2 keys_zone=cache_one:10m inactive=7d max_size=10g;
+proxy_temp_path   /data/cache/proxy_temp_path;
+proxy_cache_key   $host$uri$is_args$args;
+#然后在server里面的location匹配好目的文件，加入下一段即可
+proxy_cache cache_one;
+proxy_cache_valid 200 304 24h;
+proxy_cache_valid any 10m;
+proxy_pass https://$host;
+proxy_cache_key $host$uri$is_args$args;
+add_header  Nginx-Cache "$upstream_cache_status"; 3. 内置模块
+
+3.内置模块
+NGINX含有大量的模块可以支持多种复杂的需求，比如源码目录src/http/modules里面就有很多c模块的代码，或者直接通过./configure –help|grep module来查看有哪些内置模块，编译时候直接加上就可以了。
+除了NGINX内置的模块，网络上还有很多第三方的模块，可以通过编译时候加参数–add-module=PATH指定模块源码来编译。
+下面介绍一些我们线上用过而且比较赞的内置模块。
+
+3.1 stream
+端口转发的模块，从NGINX 1.9版本才开始支持，包含tcp和udp的支持，和IPTABLES相比这个虽然是应用层，会监听端口，但是配置起来很方便，比IPTABLES灵活，在tcp模块下面添加类似vhost的server就可以了，方便自动化管理，参考配置：
+server {
+    listen PORT;
+    proxy_pass IP:PORT;
+    access_log /data/logs/tcp/PORT.log;
+}
+
+3.2 http_realip_module
+NGINX反向代理之后，如何让后端web直接获取到的IP不是反向代理的iP，而是直接获取到用户的真实IP呢，就需要这个模块了，不需要代码那里再做类似X-Real-IP的变量特殊判断。
+
+3.3 http_slice_module
+在做CDN时候可以用到，让一个大文件分片，分成多个小文件通过206断点续传到后端，然后再组合起来，避免大文件直接回源导致多副本和多次回源的问题。
+
+3.4 http_secure_link_module
+前面说到的防盗链可以用这个来做，但是这个一般是针对那种文件下载时候用到的，比如从网页下载时候，服务端生成一个加密URL给用户，然后这个URL有过期时间之类的，避免此URL被多次分享出去，不过普通的素材加载还是用普通的防盗链即可。
+
+3.5 http_sub_module
+替换响应给用户的内容，相对于sed之后再返回，比如可以在需要临时全局修改网站背景或者title时候可以一次性处理好。
+
+4.扩展项目
+简单介绍下大名鼎鼎的两个基于NGINX的扩展项目，也是我们线上有很多地方用到的。
+
+4.1 openresty
+集成lua脚本，几乎可以完成任何普通web相关的需求。
+比如URL加密进行防劫持和防盗链，服务端动态生成一串aes加密的URL给CDN，CDN的openresty解密之后用普通的URL转发到后端，然后再返回给用户正确的内容。
+
+4.2 tengine
+淘宝的NGINX修改版，实现了很多nginx的收费功能或者是特殊功能，比如动态加载、concat合并请求，动态解析等。
+我们python开发的后台基本都是用的这个版本，主要是利用了concat的合并素材的功能。</code></pre><p>More Info: <span class="exturl"><a class="exturl__link" href="https://nginx.org/" target="_blank" rel="noopener">NGINX</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p><script>document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });</script></div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ END ------</div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://www.gov-cn.cn/tags/Nginx/">Nginx</a></span></div><div class="post-reward reward"><div class="reward-button">Buy me a coffee</div><div class="reward-qrcode"><span class="reward-qrcode-alipay"><img class="reward-qrcode-alipay__img" src="https://static-hk.gov-cn.cn/cdn/images/alipay.jpg"><div class="reward-qrcode-alipay__text">Alipay</div></span><span class="reward-qrcode-wechat"><img class="reward-qrcode-wechat__img" src="https://static-hk.gov-cn.cn/cdn/images/wechatpay.jpg"><div class="reward-qrcode-wechat__text">Wechat</div></span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/posts/b079133c/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">Ansible自动化之批量创建用户</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/posts/84de9b61/"><span class="paginator-prev__text">Linux上创建交换分区</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="valine-container"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">Catalog</span><span class="sidebar-nav-ov">Overview</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#NGINX配置文件配置信息"><span class="toc-number">1.</span> <span class="toc-text">NGINX配置文件配置信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#详细内容"><span class="toc-number">1.1.</span> <span class="toc-text">详细内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主配置配置文件讲解"><span class="toc-number">1.2.</span> <span class="toc-text">主配置配置文件讲解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NGINX均衡负载及虚拟主机配置文件讲解"><span class="toc-number">1.3.</span> <span class="toc-text">NGINX均衡负载及虚拟主机配置文件讲解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NGINX实用规则"><span class="toc-number">1.4.</span> <span class="toc-text">NGINX实用规则</span></a></li></ol></li></ol></section><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/avatar.svg" alt="avatar"></div><p class="sidebar-ov-author__text">唯一不变的就是一直在变</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/beytagh-stark" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://static-hk.gov-cn.cn/cdn/images/wechatqr.png" target="_blank" rel="noopener" data-popover="Wechat" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-weixin"></i></span></a><a class="sidebar-ov-social-item" href="https://t.me/hihi007s" target="_blank" rel="noopener" data-popover="Telegram" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-telegram"></i></span></a><a class="sidebar-ov-social-item" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1727488558&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener" data-popover="QQ" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-qq"></i></span></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">You have read </span><span class="sidebar-reading-info__num">0</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2016~2020</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>gov-cn.cn</span><span class="footer__devider">|</span><span>粤ICP备-19148026号</span></div><div class="busuanzi"><span class="busuanzi-siteuv"><span class="busuanzi-siteuv__icon" data-popover-pos="up" data-popover="Unique Visitor"><i class="fas fa-user"></i></span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_uv"></span></span><span class="busuanzi-sitepv"><span class="busuanzi-siteuv__icon" data-popover-pos="up" data-popover="Page View"><i class="fas fa-eye"></i></span><span class="busuanzi-siteuv__value" id="busuanzi_value_site_pv"></span></span></div><div>技术支持：Service:Github Pages / Admin:Hexo / Theme:Stun</div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="Search for Posts (Support multiple keywords)"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/npm/ribbon.js@latest/dist/ribbon.min.js" size="120" alpha="0.6" zindex="-1"></script><script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script><script>function initSearch(){var i=!0,e="search.json";e?/json$/i.test(e)&&(i=!1):e="search.xml";var t="/"+e;$.ajax({url:t,dataType:i?"xml":"json",async:!0,success:function(e){var n=i?$("entry",e).map(function(){return{title:$("title",this).text(),content:$("content",this).text(),url:$("url",this).text()}}).get():e,o=$(".search-input input"),c=$(".search-results"),y=100,m=1,t=function(){var e=o.val().toLowerCase().trim(),x=e.split(/[\s]+/),w=[];1<x.length&&x.push(e),0<e.length&&n.forEach(function(e){var t=!1,n=e.title&&e.title.trim()||"[ Untitled ]",o=n&&n.toLowerCase(),c=e.content&&e.content.replace(/<[^>]+>/g,""),i=c&&c.toLowerCase(),r=e.url&&decodeURI(e.url).replace(/\/{2,}/g,"/"),s=[],a=[];x.forEach(function(e){function t(t,e,n,o){if(!t||!e)return[];var c=0,i=-1,r=[];for(n||(t=t.toLowerCase(),e=e.toLowerCase());-1!==(i=e.indexOf(t,c));){var a=!1;s.forEach(function(e){e.index===i&&e.word.length<t.length&&(e.word=t,a=!0)}),c=i+t.length,!a&&r.push({index:i,word:t,weight:o})}return r}s=s.concat(t(e,o,!1,y)),a=a.concat(t(e,i,!1,m))});var l=s.length,u=a.length;if((0<l||0<u)&&(t=!0),t){function h(n,e,t,o){if(n&&e&&e.length){var c="",i=t,r=o;return e.forEach(function(e){if(!(e.index<i)){var t=e.index+e.word.length;c+=n.slice(i,e.index),c+="<b>"+n.slice(e.index,t)+"</b>",i=t}}),c+=n.slice(i,r)}}[s,a].forEach(function(e){e.sort(function(e,t){return e.index-t.index})});var d,f={},p=s.length*y+a.length*m,v=h(n,s,0,n.length)||n;if(0<a.length){var g=a[0].index;d=h(c,a,20<g?g-20:0,g+180)}else d=c.slice(0,200);f.title=v,f.content=d,f.url=r,f.weight=p,w.push(f)}});var t="";w.length?(w.sort(function(e,t){return t.weight-e.weight}),t+="<ul>",w.forEach(function(e){t+='<li><a class="search-results-title" href="'+e.url+'">',t+=e.title,t+='</a><div class="search-results-content">',t+=e.content,t+="</div></li>"}),t+="</ul>"):t+='<div class="search-results-none"><i class="far fa-meh"></i></div>',c.html(t)};o.on("input",t),o.on("keyup",function(e){e.keyCode===Stun.utils.codeToKeyCode("Enter")&&t()})}})}function closeSearch(){$("body").css({overflow:"auto"}),$(".search-popup").css({display:"none"}),$(".search-mask").css({display:"none"})}window.addEventListener("DOMContentLoaded",function(){Stun.utils.pjaxReloadLocalSearch=function(){$(".header-nav-search").on("click",function(e){e.stopPropagation(),$("body").css("overflow","hidden"),$(".search-popup").velocity("stop").velocity("transition.expandIn",{duration:300,complete:function(){$(".search-popup input").focus()}}),$(".search-mask").velocity("stop").velocity("transition.fadeIn",{duration:300}),initSearch()}),$(".search-mask, .search-close").on("click",function(){closeSearch()}),$(document).on("keydown",function(e){e.keyCode===Stun.utils.codeToKeyCode("Escape")&&closeSearch()})},Stun.utils.pjaxReloadLocalSearch()},!1)</script><script src="https://cdn.jsdelivr.net/npm/pjax@latest/pjax.min.js"></script><script>window.addEventListener("DOMContentLoaded",function(){new Pjax({selectors:["head title","#main",".pjax-reload"],history:!0,scrollTo:!1,scrollRestoration:!1,cacheBust:!1,debug:!1,currentUrlFullReload:!1,timeout:0});var e=null;document.addEventListener("pjax:send",function(){$(".header-nav-menu").removeClass("show"),CONFIG.pjax&&CONFIG.pjax.avoidBanner&&$("html").velocity("scroll",{duration:500,offset:$("#header").height(),easing:"easeInOutCubic"});var a=20;$(".loading-bar").addClass("loading"),$(".loading-bar__progress").css("width",a+"%"),clearInterval(e),e=setInterval(function(){95<(a+=3)&&(a=95),$(".loading-bar__progress").css("width",a+"%")},500)},!1),window.addEventListener("pjax:complete",function(){clearInterval(e),$(".loading-bar__progress").css("width","100%"),$(".loading-bar").removeClass("loading"),setTimeout(function(){$(".loading-bar__progress").css("width","0")},400),$("link[rel=prefetch], script[data-pjax-rm]").each(function(){$(this).remove()}),$("script[data-pjax], #pjax-reload script").each(function(){$(this).parent().append($(this).remove())}),Stun.utils.pjaxReloadBoot&&Stun.utils.pjaxReloadBoot(),Stun.utils.pjaxReloadScroll&&Stun.utils.pjaxReloadScroll(),Stun.utils.pjaxReloadSidebar&&Stun.utils.pjaxReloadSidebar()},!1)},!1)</script><div id="pjax-reload"><script src="https://cdn.jsdelivr.net/gh/sukkaw/busuanzi@latest/bsz.pure.mini.js" async></script></div><script src="https://cdn.jsdelivr.net/npm/leancloud-storage@latest/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script><script data-pjax="">function loadValine(){var n=["nick","mail","link"],a="nick,mail,link";a=a.split(",").filter(function(a){return-1<n.indexOf(a)}),new Valine({el:"#valine-container",appId:"jopXGpKoDU5p4BsP7nFerKcN-MdYXbMMI",appKey:"Y9MzjOW5wP0rMrhvS4C2Wvay",notify:!1,verify:!0,placeholder:"不留点念想吗？",avatar:"mp",meta:a,pageSize:"10",visitor:!1,recordIP:!1,lang:"zh-cn",path:window.location.pathname})}loadValine()</script><script src="/js/utils.js?v=2.0.0-rc.0"></script><script src="/js/stun-boot.js?v=2.0.0-rc.0"></script><script src="/js/scroll.js?v=2.0.0-rc.0"></script><script src="/js/header.js?v=2.0.0-rc.0"></script><script src="/js/sidebar.js?v=2.0.0-rc.0"></script></body></html>
